@@ -1,15 +1,11 @@
-declare namespace Express {
-    interface Request {
-        user: {
-            email: string,
-            password: string
-        },
-        userInfo: {
-            user_id: number,
-            username: string,
-            first_name:  String,
-            last_name:  String,
-            profile_pic: String,
+import express = require("express");
+import { IUsers, IUserInfo } from "../src/api/interfaces/interfaces";
+
+declare global {
+    namespace Express {
+        interface Request {
+            user?: IUsers;
+            userInfo?: IUserInfo;
         }
     }
 }
