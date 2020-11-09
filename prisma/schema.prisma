@@ -9,40 +9,38 @@ datasource db {
 
 model plants {
   id                   Int         @id @default(autoincrement())
-  user_id              Int?
-  plant_name           String?
-  water_frequency_days Int?
-  users                users?      @relation(fields: [user_id], references: [id])
+  user_id              Int
+  plant_name           String      @unique
+  water_frequency_days Int
+  users                users       @relation(fields: [user_id], references: [id])
   water_log            water_log[]
 
   @@index([user_id], name: "user_id")
 }
 
 model user_info {
-  id          Int     @id @default(autoincrement())
-  user_id     Int?
-  username    String?
-  first_name  String?
-  last_name   String?
-  profile_pic String?
-  users       users?  @relation(fields: [user_id], references: [id])
-
-  @@index([user_id], name: "user_id")
+  id          Int    @id @default(autoincrement())
+  user_id     Int    @unique
+  username    String @unique
+  first_name  String
+  last_name   String
+  profile_pic String
+  users       users  @relation(fields: [user_id], references: [id])
 }
 
 model users {
-  id        Int         @id @default(autoincrement())
-  email     String?
-  password  String?
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String
   plants    plants[]
-  user_info user_info[]
+  user_info user_info?
 }
 
 model water_log {
-  id       Int       @id @default(autoincrement())
-  plant_id Int?
-  date     DateTime?
-  plants   plants?   @relation(fields: [plant_id], references: [id])
+  id       Int      @id @default(autoincrement())
+  plant_id Int
+  date     DateTime @unique
+  plants   plants   @relation(fields: [plant_id], references: [id])
 
   @@index([plant_id], name: "plant_id")
 }
